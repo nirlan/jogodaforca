@@ -2,6 +2,12 @@
 #include <string.h>
 #include <locale.h>
 
+void abertura() {
+    printf("***********************\n");
+    printf("*    Jogo de Forca    *\n");
+    printf("***********************\n\n");
+}
+
 int main() {
     setlocale(LC_ALL, "Portuguese");
     char palavrasecreta[20];
@@ -13,6 +19,8 @@ int main() {
 
     char chutes[26];
     int tentativas;
+
+    abertura();
 
     do {
         
