@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <locale.h>
+#include "forca.h"
 
 char palavrasecreta[20];
 char chutes[26];
@@ -19,21 +20,6 @@ void chuta() {
 
     chutes[chutesdados] = chute;
     chutesdados++;
-}
-
-int jachutou(char letra) {
-    int achou = 0;
-
-    for(int j = 0; j < chutesdados; j++) {
-
-        if(chutes[j] == letra) {
-
-            achou = 1;
-            break;
-        }
-    }
-
-    return achou;
 }
 
 void desenhaforca() {
@@ -78,10 +64,34 @@ int enforcou() {
     return erros >= 5;
 }
 
+int acertou() {
+    for(int i = 0; i < strlen(palavrasecreta); i++) {
+        if(!jachutou(palavrasecreta[i])) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int jachutou(char letra) {
+    int achou = 0;
+
+    for(int j = 0; j < chutesdados; j++) {
+
+        if(chutes[j] == letra) {
+
+            achou = 1;
+            break;
+        }
+    }
+
+    return achou;
+}
+
+
 int main() {
     setlocale(LC_ALL, "Portuguese");
-
-    int acertou = 0;
 
     escolhepalavra();
     abertura();
@@ -91,5 +101,5 @@ int main() {
         desenhaforca();
         chuta();
 
-    } while(!acertou && !enforcou());
+    } while(!acertou() && !enforcou());
 }
