@@ -2,8 +2,6 @@
 #include <string.h>
 #include <locale.h>
 
-char palavrasecreta[20];
-
 void abertura() {
     printf("***********************\n");
     printf("*    Jogo de Forca    *\n");
@@ -19,10 +17,10 @@ void chuta(char chutes[26], int* tentativas) {
     (*tentativas)++;
 }
 
-int jachutou(char letra, int* tentativas, char chutes[26]) {
+int jachutou(char letra, int tentativas, char chutes[26]) {
     int achou = 0;
 
-    for(int j = 0; j < (*tentativas); j++) {
+    for(int j = 0; j < tentativas; j++) {
     
         if(chutes[j] == letra) {
 
@@ -34,9 +32,9 @@ int jachutou(char letra, int* tentativas, char chutes[26]) {
     return achou;
 }
 
-void desenhaforca(int* tentativas, char chutes[26]) {
+void desenhaforca(char palavrasecreta[20], char chutes[26], int tentativas) {
     
-    printf("Você já deu %d chutes\n", (*tentativas));
+    printf("Você já deu %d chutes\n", tentativas);
 
     for(int i = 0; i < strlen(palavrasecreta); i++) {
 
@@ -50,12 +48,14 @@ void desenhaforca(int* tentativas, char chutes[26]) {
 
 }
 
-void escolhepalavra() {
+void escolhepalavra(char palavrasecreta[20]) {
     sprintf(palavrasecreta, "MELANCIA");
 }
 
 int main() {
     setlocale(LC_ALL, "Portuguese");
+
+    char palavrasecreta[20];
 
     int acertou = 0;
     int enforcou = 0;
@@ -63,12 +63,12 @@ int main() {
     char chutes[26];    
     int tentativas = 0;
 
+    escolhepalavra(palavrasecreta);
     abertura();
-    escolhepalavra();
-
+    
     do {
         
-        desenhaforca(&tentativas, chutes);
+        desenhaforca(palavrasecreta, chutes, tentativas);
         chuta(chutes, &tentativas);        
 
     } while(!acertou && !enforcou);
